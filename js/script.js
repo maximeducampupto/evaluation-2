@@ -1,41 +1,138 @@
-/*
-Memory game
+/* * * * * * * * * * *
+ * Variables
+ * * * * * * * * * * */
+let gameBoard = document.getElementById('game'),
+    userSelection = [],
+    cards = [
+        {
+            id: 0,
+            path: "armor",
+        },
+        {
+            id: 1,
+            path: "armor",
+        },
+        {
+            id: 2,
+            path: "axe",
+        },
+        {
+            id: 3,
+            path: "axe",
+        },
+        {
+            id: 4,
+            path: "dagger",
+        },
+        {
+            id: 5,
+            path: "dagger",
+        },
+        {
+            id: 6,
+            path: "upg_shield",
+        },
+        {
+            id: 7,
+            path: "upg_shield",
+        },
+        {
+            id: 8,
+            path: "tome",
+        },
+        {
+            id: 9,
+            path: "tome",
+        },
+        {
+            id: 10,
+            path: "map",
+        },
+        {
+            id: 11,
+            path: "map",
+        },
+        {
+            id: 12,
+            path: "axe2",
+        },
+        {
+            id: 13,
+            path: "axe2",
+        },
+        {
+            id: 14,
+            path: "axeDouble2",
+        },
+        {
+            id: 15,
+            path: "axeDouble2",
+        },
+        {
+            id: 16,
+            path: "backpack",
+        },
+        {
+            id: 17,
+            path: "backpack",
+        },
+        {
+            id: 18,
+            path: "sword",
+        },
+        {
+            id: 19,
+            path: "sword",
+        },
+        {
+            id: 20,
+            path: "envelope",
+        },
+        {
+            id: 21,
+            path: "envelope",
+        },
+        {
+            id: 22,
+            path: "scroll",
+        },
+        {
+            id: 23,
+            path: "scroll",
+        },
+    ],
+    shuffled = shuffle(cards),
+    score = 0,
+    cardsDiv = document.getElementsByClassName('card');
+
+/* * * * * * * * * * *
+ * Creates html elements from randomized array of objects
+ * * * * * * * * * * */
+function prepareBoard(arrayObj)
+{
+    for (let i = 0; i < arrayObj.length; i++)
+    {
+        let card = document.createElement('div');
+
+        card.classList.add('card');
+        card.id = arrayObj[i].id;
+        card.setAttribute('data-path', arrayObj[i].path);
+
+        gameBoard.appendChild(card);
+    }
+}
 
 
-First Screen:
-Game must contain pairs of cards, face down (10 pairs, 20 cards)
-User can select two (and only two cards) so as to find all the pairs
-When user selects a card, it shifts and reveals its face
-If both cards are different, shift them face down again
-If they are the same, a little animation plays to reward the user
-
-User has a limited amount of time to play, based upon his difficulty setting choice
-Easy: 5mins, Medium: 3mins, Hard: 2mins
-Animations must be swift enough to account for the hardest setting (2mins)
-
-Second Screen:
-Display either when timer runs out or player wins
-Show the score (maybe history?)
-Replay button
-
-
-Logic:
-At the start of the game
-
-
- */
-
-
-/*
-Shuffles array it receives as a parameter into a new temporary array then returns it
- */
-function shuffle(cards)
+/* * * * * * * * * * *
+* Shuffles array it receives as a parameter into a new temporary array then returns it
+* * * * * * * * * * */
+function shuffle(array)
 {
     let temp = [];
 
-    for (let i = 0; i < cards.length; i++)
+    for (let i = 0; i < array.length; i++)
     {
-        temp.push(cards[i]);
+        temp.push(array[i]);
     }
 
     let currentIndex = temp.length, temporaryValue, randomIndex;
@@ -53,142 +150,72 @@ function shuffle(cards)
     return temp;
 }
 
-
-/*
-Prepares the board for game start
- */
-function prepareBoard(shuffled)
+/* * * * * * * * * * *
+* // TODO
+* * * * * * * * * * */
+function createListeners()
 {
-    for (let i = 0; i < shuffled.length; i++)
+    for (let i = 0; i < cardsDiv.length; i++)
     {
-        let img = document.createElement('img');
-        img.src = `assets/${shuffled[i].path}`;
-        img.style.display = "none";
-
-        let container = document.createElement('div');
-        container.id = shuffled[i].id;
-        container.classList.add('card-container');
-
-        container.appendChild(img);
-
-        gameBoard.appendChild(container);
-    }
-}
-
-
-
-/*
-Add click event listener on all existing card container
- */
-function createCardContainersListeners()
-{
-    for (let i = 0; i < cardContainers.length; i++)
-    {
-        cardContainers[i].addEventListener('click', function(e)
+        cardsDiv[i].addEventListener('click', function(e)
         {
-            if (!handlingClickEvent)
-            {
+           let target = e.target;
 
-            }
-            let el = e.target;
+           if (userSelection.length < 2)
+           {
+               Animator.flip(target);
+               userSelection.push(target);
+           }
 
-            userSelection.push(el);
+           if (userSelection.length === 2)
+           {
+               let firstChoice = userSelection[0],
+                   secondChoice = userSelection[1];
 
-            el.firstChild.style.display = "block";
-
-
-            if (userSelection.length === 2)
-            {
-                let firstChoice = cards[userSelection[0].id],
-                    secondChoice = cards[userSelection[1].id];
-
-
-                if (firstChoice.path === secondChoice.path)
-                {
-                    score++;
-                    userSelection = [];
-                } else {
-                    setTimeout(function(){
-                        userSelection.forEach(function(item)
-                        {
-                            item.firstChild.style.display = "none";
-                        });
-                        userSelection = [];
-                    }, 1000);
-                }
-            }
-
-        })
+               if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path'))
+               {
+                   score++;
+                   userSelection = [];
+               } else {
+                   Animator.flipBack(firstChoice, target);
+               }
+           }
+        });
     }
 }
 
+/* * * * * * * * * * *
+* // TODO
+* * * * * * * * * * */
+let Animator = {
+    removeCLasses: function(card)
+    {
+        card.className = "card";
+    },
 
+    flip: function(card)
+    {
+        card.classList.add('flipped');
+        setTimeout(function()
+        {
+            card.classList.add(card.getAttribute('data-path'));
+        }, 100);
+    },
 
-/*
-Variables
- */
-let gameBoard = document.getElementById('game'),
-    userSelection = [],
-    cards = [
+    flipBack: function(firstChoice, target)
     {
-        id: 0,
-        path: "armor.png",
-    },
-    {
-        id: 1,
-        path: "armor.png",
-    },
-    {
-        id: 2,
-        path: "axe.png",
-    },
-    {
-        id: 3,
-        path: "axe.png",
-    },
-    {
-        id: 4,
-        path: "dagger.png",
-    },
-    {
-        id: 5,
-        path: "dagger.png",
-    },
-    {
-        id: 6,
-        path: "shield.png",
-    },
-    {
-        id: 7,
-        path: "shield.png",
-    },
-    {
-        id: 8,
-        path: "tome.png",
-    },
-    {
-        id: 9,
-        path: "tome.png",
-    },
-    {
-        id: 10,
-        path: "map.png",
-    },
-    {
-        id: 11,
-        path: "map.png",
+        setTimeout(function() {
+            firstChoice.className = "card";
+            target.className = "card";
+            userSelection = [];
+        }, 500);
     }
-    ],
-    shuffled = shuffle(cards),
-    score = 0,
-    cardContainers = document.getElementsByClassName('card-container'),
-    handlingClickEvent = false;
+
+
+};
 
 
 
 
 prepareBoard(shuffled);
-
-
-createCardContainersListeners();
-
+createListeners();

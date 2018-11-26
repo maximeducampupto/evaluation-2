@@ -1,37 +1,94 @@
 * {
     margin: 0;
     padding: 0;
-}
-
-.wrapper {
-    width: 80%;
-    margin: 0 auto;
-}
-
-#game {
-    width: 1024px;
-    margin: 0 auto;
-}
-
-.card-container {
-    background: saddlebrown;
-    border: 3px solid goldenrod;
-    border-radius: 10px;
-    width: 191px;
-    height: 191px;
-    display: inline-block;
-    margin: 2rem;
     box-sizing: border-box;
 }
 
-.card-container:hover {
-    background: rgba(143, 72, 21, 0.8);
-    border-color: rgba(218, 165, 32, 0.79);
+body {
+    background-image: url("../assets/background2.jpg");
+    background-size: cover;
 }
 
-.card-container img {
-    display: inline-block;
-    margin: 0 auto;
-    position: relative;
-    top: 20px;
+#game {
+    width: 1400px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10rem auto;
 }
+
+.card {
+    width: 150px;
+    height: 300px;
+    flex-basis: 191px;
+    margin: .5rem;
+    padding: 1rem;
+    background: rgb(94, 47, 14);
+    border: 6px solid darkgoldenrod;
+    background-image: url("../assets/gemRed.png");
+    background-size: cover;
+    border-radius: 10px;
+    background-position: center;
+}
+
+.flipped {
+    animation: flipped .2s ease-in forwards;
+}
+
+@keyframes flipped {
+    0% {
+        transform: rotateX(0deg);
+    }
+    100% {
+        transform: rotateY(-180deg);
+    }
+}
+
+.armor {
+    background-image: url("../assets/armor.png");
+}
+
+.axe {
+    background-image: url("../assets/axe.png");
+}
+
+.dagger {
+    background-image: url("../assets/dagger.png");
+}
+
+.upg_shield {
+    background-image: url("../assets/upg_shield.png");
+}
+
+.tome {
+    background-image: url("../assets/tome.png");
+}
+
+.map {
+    background-image: url("../assets/map.png");
+}
+
+.axe2 {
+    background-image: url("../assets/axe2.png");
+}
+
+.axeDouble2 {
+    background-image: url("../assets/axeDouble2.png");
+}
+
+.backpack {
+    background-image: url("../assets/backpack.png");
+}
+
+.sword {
+    background-image: url("../assets/sword.png");
+}
+
+.envelope {
+    background-image: url("../assets/envelope.png");
+}
+
+.scroll {
+    background-image: url("../assets/scroll.png");
+}
+
