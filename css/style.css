@@ -1,25 +1,87 @@
+@import url('https://fonts.googleapis.com/css?family=Yatra+One');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Yatra One', cursive;
 }
 
 body {
     background-image: url("../assets/background2.jpg");
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#difficulty-settings-wrapper {
+    width: 80%;
+    color: white;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+#difficulty-settings-wrapper h1 {
+    margin-bottom: 5rem;
+    padding: 2rem;
+    color: goldenrod;
+    border: 6px solid goldenrod;
+    border-radius: 10px;
+    background: url("../assets/wooden-pattern.jpg");
+    background-repeat: repeat;
+}
+
+.difficultyButton {
+    font-size: 1.4rem;
+    width: 150px;
+    height: 150px;
+    padding: 1.5rem 0;
+    margin-bottom: 5rem;
+    color: goldenrod;
+    border: 6px solid goldenrod;
+    border-radius: 50%;
+    background: url("../assets/wooden-pattern.jpg");
+    background-repeat: repeat;
+    background-position: center;
+    outline: none;
+}
+
+.difficultyButton:hover {
+    cursor: pointer;
+    border-color: gold;
+    color: gold;
 }
 
 #game {
     width: 1400px;
     display: flex;
+    visibility: hidden;
     flex-wrap: wrap;
     justify-content: center;
     margin: 10rem auto;
+    position: relative;
+    left: 2000px;
+    bottom: 115vh;
+}
+
+#score-wrapper {
+    position: relative;
+    left: 4000px;
+    bottom: 200vh;
+    font-size: 5rem;
+    display: none;
 }
 
 .card {
-    width: 150px;
-    height: 300px;
+    width: 100px;
+    height: 200px;
     flex-basis: 191px;
     margin: .5rem;
     padding: 1rem;
@@ -29,19 +91,6 @@ body {
     background-size: cover;
     border-radius: 10px;
     background-position: center;
-}
-
-.flipped {
-    animation: flipped .2s ease-in forwards;
-}
-
-@keyframes flipped {
-    0% {
-        transform: rotateX(0deg);
-    }
-    100% {
-        transform: rotateY(-180deg);
-    }
 }
 
 .armor {
@@ -92,3 +141,45 @@ body {
     background-image: url("../assets/scroll.png");
 }
 
+
+.flipped {
+    animation: flipped .2s ease-in forwards;
+}
+
+.difficultySettingsToLeft {
+    animation: difficultySettingsToLeft .3s forwards;
+}
+
+.gameBoardToLeft {
+    animation: gameBoardToLeft .3s forwards;
+}
+
+@keyframes flipped {
+    0% {
+        transform: rotateX(0deg);
+    }
+    100% {
+        transform: rotateY(-180deg);
+    }
+}
+
+@keyframes difficultySettingsToLeft  {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: -2000px;
+        visibility: hidden;
+    }
+}
+
+@keyframes gameBoardToLeft  {
+    0% {
+        left: 2000px;
+        visibility: hidden;
+    }
+    100% {
+        left: 0px;
+        visibility: visible;
+    }
+}

@@ -103,7 +103,10 @@ let gameBoard = document.getElementById('game'),
     ],
     shuffled = shuffle(cards),
     score = 0,
-    cardsDiv = document.getElementsByClassName('card');
+    cardsDiv = document.getElementsByClassName('card'),
+    difficultyWrapper = document.getElementById('difficulty-settings-wrapper'),
+    difficultyButtons = document.getElementsByClassName('difficultyButton'),
+    selectedDifficulty = null;
 
 /* * * * * * * * * * *
  * Creates html elements from randomized array of objects
@@ -182,6 +185,16 @@ function createListeners()
            }
         });
     }
+
+    for (let i = 0; i < difficultyButtons.length; i++)
+    {
+        difficultyButtons[i].addEventListener('click', function(e)
+        {
+           selectedDifficulty = e.target.id;
+           Animator.displayBoard();
+        });
+    }
+
 }
 
 /* * * * * * * * * * *
@@ -209,6 +222,12 @@ let Animator = {
             target.className = "card";
             userSelection = [];
         }, 500);
+    },
+
+    displayBoard: function()
+    {
+        difficultyWrapper.classList.add('difficultySettingsToLeft');
+        gameBoard.classList.add('gameBoardToLeft');
     }
 
 
@@ -217,5 +236,13 @@ let Animator = {
 
 
 
-prepareBoard(shuffled);
-createListeners();
+function startGame()
+{
+    prepareBoard(shuffled);
+    createListeners();
+}
+
+
+startGame();
+
+
