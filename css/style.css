@@ -183,3 +183,16 @@ body {
         visibility: visible;
     }
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .card {
+        width: 25px;
+        height: 25px;
+        flex-basis: 25px;
+        background: rgb(94, 47, 14);
+        border: 6px solid darkgoldenrod;
+        background-size: cover;
+        border-radius: 10px;
+        background-position: center;
+    }
+}
