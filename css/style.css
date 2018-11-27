@@ -17,7 +17,6 @@ body {
 }
 
 #difficulty-settings-wrapper {
-    width: 80%;
     color: white;
     margin: 0 auto;
     display: flex;
@@ -25,6 +24,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100vw;
     position: relative;
 }
 
@@ -60,6 +60,7 @@ body {
 }
 
 #game {
+    /*
     width: 1400px;
     display: flex;
     visibility: hidden;
@@ -69,6 +70,17 @@ body {
     position: relative;
     left: 2000px;
     bottom: 115vh;
+     */
+    position: relative;
+    left: 2000px;
+    bottom: 75vh;
+    width: 50%;
+    padding: 2rem;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+;
+
 }
 
 #score-wrapper {
@@ -80,6 +92,7 @@ body {
 }
 
 .card {
+    /*
     width: 100px;
     height: 200px;
     flex-basis: 191px;
@@ -91,6 +104,17 @@ body {
     background-size: cover;
     border-radius: 10px;
     background-position: center;
+     */
+    width: 100px;background: rgb(94, 47, 14);
+    border: 6px solid darkgoldenrod;
+    background-image: url("../assets/gemRed.png");
+    background-size: cover;
+    border-radius: 10px;
+    background-position: center;
+    height: 100px;
+    display: inline-block;
+    margin: .5rem;
+
 }
 
 .armor {
@@ -179,7 +203,7 @@ body {
         visibility: hidden;
     }
     100% {
-        left: 0px;
+        left: 0;
         visibility: visible;
     }
 }

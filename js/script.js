@@ -101,6 +101,7 @@ let gameBoard = document.getElementById('game'),
             path: "scroll",
         },
     ],
+    rand,
     shuffled = shuffle(cards),
     score = 0,
     cardsDiv = document.getElementsByClassName('card'),
@@ -125,12 +126,20 @@ function prepareBoard(arrayObj)
     }
 }
 
+/* * * * * * * * * * *
+ * // TODO
+ * * * * * * * * * * */
+function randomNumber(maxLength)
+{
+    return Math.floor(Math.random() * maxLength);
+}
 
 /* * * * * * * * * * *
 * Shuffles array it receives as a parameter into a new temporary array then returns it
 * * * * * * * * * * */
-function shuffle(array)
+function shuffle(param)
 {
+    /*
     let temp = [];
 
     for (let i = 0; i < array.length; i++)
@@ -151,6 +160,22 @@ function shuffle(array)
     }
 
     return temp;
+     */
+    let temp = [];
+
+    for (let i = 0; i < param.length; i++)
+    {
+        rand = randomNumber(param.length);
+        if (temp.indexOf(param[rand]) === -1)
+        {
+            temp.push(param[rand]);
+        } else {
+            i--;
+        }
+    }
+
+    return temp;
+
 }
 
 /* * * * * * * * * * *
