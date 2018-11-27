@@ -109,6 +109,7 @@ let gameBoard = document.getElementById('game'),
     difficultyButtons = document.getElementsByClassName('difficultyButton'),
     selectedDifficulty = null;
 
+
 /* * * * * * * * * * *
  * Creates html elements from randomized array of objects
  * * * * * * * * * * */
@@ -126,41 +127,22 @@ function prepareBoard(arrayObj)
     }
 }
 
+
 /* * * * * * * * * * *
- * // TODO
+ * Generates random integer based on the maximuum number given in parameter
+ * Returns a number
  * * * * * * * * * * */
 function randomNumber(maxLength)
 {
     return Math.floor(Math.random() * maxLength);
 }
 
+
 /* * * * * * * * * * *
-* Shuffles array it receives as a parameter into a new temporary array then returns it
+* Shuffles the array it receives as a parameter into a new temporary array then returns it
 * * * * * * * * * * */
 function shuffle(param)
 {
-    /*
-    let temp = [];
-
-    for (let i = 0; i < array.length; i++)
-    {
-        temp.push(array[i]);
-    }
-
-    let currentIndex = temp.length, temporaryValue, randomIndex;
-
-    while (0 !== currentIndex) {
-
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        temporaryValue = temp[currentIndex];
-        temp[currentIndex] = temp[randomIndex];
-        temp[randomIndex] = temporaryValue;
-    }
-
-    return temp;
-     */
     let temp = [];
 
     for (let i = 0; i < param.length; i++)
@@ -173,16 +155,19 @@ function shuffle(param)
             i--;
         }
     }
-
     return temp;
-
 }
 
+
 /* * * * * * * * * * *
-* // TODO
+* Handles the creation of all event related to cards
 * * * * * * * * * * */
-function createListeners()
+function createCardListeners()
 {
+    /* * * * * * * * * * *
+    * Cards event listeners, handles comparisons and calls for animations
+    * to be played and score to be displayed
+    * * * * * * * * * * */
     for (let i = 0; i < cardsDiv.length; i++)
     {
         cardsDiv[i].addEventListener('click', function(e)
@@ -210,26 +195,29 @@ function createListeners()
            }
         });
     }
+}
+
+
+/* * * * * * * * * * *
+*  Creation of listeners attached to the difficulty buttons and calls for gameStart()
+* * * * * * * * * * */
+function createDifficultyButtonsListeners()
+{
 
     for (let i = 0; i < difficultyButtons.length; i++)
     {
         difficultyButtons[i].addEventListener('click', function(e)
         {
-           selectedDifficulty = e.target.id;
-           Animator.displayBoard();
+            selectedDifficulty = e.target.id;
+            startGame();
         });
     }
-
 }
 
 /* * * * * * * * * * *
-* // TODO
+* Responsible for all the animations handling
 * * * * * * * * * * */
 let Animator = {
-    removeCLasses: function(card)
-    {
-        card.className = "card";
-    },
 
     flip: function(card)
     {
@@ -264,10 +252,11 @@ let Animator = {
 function startGame()
 {
     prepareBoard(shuffled);
-    createListeners();
+    createCardListeners();
+    Animator.displayBoard();
+    console.log(selectedDifficulty);
 }
 
 
-startGame();
-
+createDifficultyButtonsListeners();
 
