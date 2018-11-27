@@ -107,7 +107,8 @@ let gameBoard = document.getElementById('game'),
     cardsDiv = document.getElementsByClassName('card'),
     difficultyWrapper = document.getElementById('difficulty-settings-wrapper'),
     difficultyButtons = document.getElementsByClassName('difficultyButton'),
-    selectedDifficulty = null;
+    timerDiv = document.getElementById('timer');
+
 
 
 /* * * * * * * * * * *
@@ -160,37 +161,38 @@ function shuffle(param)
 
 
 /* * * * * * * * * * *
-* Handles the creation of all event related to cards
+* Cards event listeners, handles comparisons and calls for animations
+* to be played and score to be displayed
 * * * * * * * * * * */
 function createCardListeners()
 {
-    /* * * * * * * * * * *
-    * Cards event listeners, handles comparisons and calls for animations
-    * to be played and score to be displayed
-    * * * * * * * * * * */
+
     for (let i = 0; i < cardsDiv.length; i++)
     {
         cardsDiv[i].addEventListener('click', function(e)
         {
-           let target = e.target;
-
-           if (userSelection.length < 2)
+           if (Game.isRunning)
            {
-               Animator.flip(target);
-               userSelection.push(target);
-           }
+               let target = e.target;
 
-           if (userSelection.length === 2)
-           {
-               let firstChoice = userSelection[0],
-                   secondChoice = userSelection[1];
-
-               if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path'))
+               if (userSelection.length < 2)
                {
-                   score++;
-                   userSelection = [];
-               } else {
-                   Animator.flipBack(firstChoice, target);
+                   Animator.flip(target);
+                   userSelection.push(target);
+               }
+
+               if (userSelection.length === 2)
+               {
+                   let firstChoice = userSelection[0],
+                       secondChoice = userSelection[1];
+
+                   if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path'))
+                   {
+                       score++;
+                       userSelection = [];
+                   } else {
+                       Animator.flipBack(firstChoice, target);
+                   }
                }
            }
         });
@@ -208,8 +210,11 @@ function createDifficultyButtonsListeners()
     {
         difficultyButtons[i].addEventListener('click', function(e)
         {
-            selectedDifficulty = e.target.id;
-            startGame();
+            if (!Game.isRunning)
+            {
+                Timer.init(e.target.id);
+                startGame();
+            }
         });
     }
 }
@@ -241,20 +246,107 @@ let Animator = {
     {
         difficultyWrapper.classList.add('difficultySettingsToLeft');
         gameBoard.classList.add('gameBoardToLeft');
+    },
+
+    displayScore: function()
+    {
+        gameBoard.classList.remove('gameBoardToLeft');
+        gameBoard.classList.add('gameBoardToLeftMost');
     }
 
 
 };
 
 
+let Timer = {
+    selectedDifficulty: null,
 
+    init: function (value) {
+        Timer.selectedDifficulty = value;
+    },
+
+    start: function () {
+        switch (Timer.selectedDifficulty) {
+            case "easy":
+                Timer.runFor(300); // 5 minutes
+                break;
+            case "medium":
+                Timer.runFor(150); // 2mins30
+                break;
+            case "hard":
+                Timer.runFor(60); // 1 minutes
+            break;
+            default:
+                Timer.runFor(180);
+        }
+    },
+
+    runFor: function(time)
+    {
+
+        let timeLeft = 3;
+        Timer.display(timeLeft);
+
+        function loop()
+        {
+            let timer = setTimeout(function() {
+                timeLeft--;
+                Timer.display(timeLeft);
+                if (timeLeft > 0)
+                {
+                    loop();
+                } else if (timeLeft === 0)
+                {
+                    Game.timeRanOut();
+                }
+            }, 1000);
+        }
+
+        loop();
+    },
+
+    display: function(timeLeft)
+    {
+        let minutes = Math.floor(timeLeft / 60),
+            seconds = Math.floor(timeLeft % 60);
+
+        minutes = minutes < 10 && minutes > 0 ? `0${minutes}`: minutes;
+        seconds = seconds < 10 && seconds > 0 ? `0${seconds}`: seconds;
+
+        minutes = minutes === 0 ? '00' : minutes;
+        seconds = seconds === 0 ? '00' : seconds;
+
+        timerDiv.innerHTML = `${minutes} : ${seconds}`;
+    }
+
+
+}
+
+
+let Game = {
+
+    isRunning : false,
+
+
+    timeRanOut: function()
+    {
+        Game.gameOver("timer");
+    },
+
+    gameOver: function(reason)
+    {
+        Game.isRunning = false;
+        Animator.displayScore();
+    }
+}
 
 function startGame()
 {
+    Game.isRunning = true;
     prepareBoard(shuffled);
     createCardListeners();
     Animator.displayBoard();
-    console.log(selectedDifficulty);
+    Timer.start();
 }
 
 

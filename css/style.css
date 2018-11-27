@@ -73,14 +73,25 @@ body {
      */
     position: relative;
     left: 2000px;
-    bottom: 75vh;
+    bottom: 85vh;
     width: 50%;
     padding: 2rem;
     margin: 0 auto;
     box-sizing: border-box;
+}
 
-;
-
+#timer {
+    background: url("../assets/wooden-pattern.jpg");
+    font-size: 1.5rem;
+    color: goldenrod;
+    border: 6px solid goldenrod;
+    border-radius: 10px;
+    position: relative;
+    bottom: 30px;
+    text-align: center;
+    width: fit-content;
+    padding: 1rem;
+    margin: 0 auto;
 }
 
 #score-wrapper {
@@ -178,6 +189,10 @@ body {
     animation: gameBoardToLeft .3s forwards;
 }
 
+.gameBoardToLeftMost {
+    animation: gameBoardToLeftMost .3s forwards;
+}
+
 @keyframes flipped {
     0% {
         transform: rotateX(0deg);
@@ -203,10 +218,22 @@ body {
         visibility: hidden;
     }
     100% {
-        left: 0;
+        left: 20px;
         visibility: visible;
     }
 }
+
+@keyframes gameBoardToLeftMost  {
+    0% {
+        left: 20px;
+        visibility: visible;
+    }
+    100% {
+        left: -2000px;
+        visibility: hidden;
+    }
+}
+
 
 /* * * * * * * * * * *
 * // WIP WIP WIP
