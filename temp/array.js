@@ -33,8 +33,6 @@ function shuffle(param)
         {
             shuffled.push(param[rand]);
         } else {
-            shuffled.push("");
-            shuffled.pop();
             i--;
         }
     }
