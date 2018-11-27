@@ -218,14 +218,14 @@ function createDifficultyButtonsListeners()
             if (!Game.isRunning)
             {
                 Timer.init(e.target.id);
-                startGame();
+                Game.start();
             }
         });
     }
 }
 
 /* * * * * * * * * * *
-* Responsible for all the animations handling
+* Responsible for handling all the animations
 * * * * * * * * * * */
 let Animator = {
 
@@ -265,6 +265,9 @@ let Animator = {
 };
 
 
+/* * * * * * * * * * *
+* Responsible for running and displaying the timer based on difficulty setting
+* * * * * * * * * * */
 let Timer = {
     selectedDifficulty: null,
     timeLeft : null,
@@ -339,6 +342,9 @@ let Timer = {
 };
 
 
+/* * * * * * * * * * *
+* Responsible for starting/stopping the game and displaying scores
+* * * * * * * * * * */
 let Game = {
 
     isRunning : false,
@@ -362,26 +368,26 @@ let Game = {
 
         switch(reason) {
             case "timer":
-                document.getElementById('result').innerHTML = "You lose!";
-                document.getElementById('timeLeft').innerHTML = "Timer ran out";
+                document.getElementById('result').innerHTML = "Dommage!";
+                document.getElementById('timeLeft').innerHTML = "Tu es à court de temps";
+                document.getElementById('pairs-found').innerHTML = `Tu as trouvé ${Game.score} ${Game.score === 1 ? "paire" : "paires"}`;
                 break;
             case "win":
-                document.getElementById('result').innerHTML = "Congratulations!";
-                document.getElementById('timeLeft').innerHTML = `Time left: ${timeLeft[0]} mins and ${timeLeft[1]} seconds`;
+                document.getElementById('result').innerHTML = "Félicitations!";
+                document.getElementById('timeLeft').innerHTML = `Temps restant: ${timeLeft[0]} ${timeLeft[0] <= 1 ? "min" : "mins"} et ${timeLeft[1]} secondes`;
+                document.getElementById('pairs-found').innerHTML = `Tu as trouvé toutes les paires!"}`;
         }
+    },
 
-        document.getElementById('pairs-found').innerHTML = `You've found ${Game.score} ${Game.score === 1 ? "pair" : "pairs"}`;
+    start: function()
+    {
+        Game.isRunning = true;
+        prepareBoard(shuffled);
+        createCardListeners();
+        Animator.displayBoard();
+        Timer.start();
     }
 };
-
-function startGame()
-{
-    Game.isRunning = true;
-    prepareBoard(shuffled);
-    createCardListeners();
-    Animator.displayBoard();
-    Timer.start();
-}
 
 
 createDifficultyButtonsListeners();

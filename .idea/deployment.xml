@@ -5,7 +5,7 @@
       <paths name="web host up to">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/memory" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
