@@ -182,7 +182,7 @@ function createCardListeners()
                }
 
                if (userSelection.length === 2)
-               {
+               { // TODO prevent double click on same image being a win
                    let firstChoice = userSelection[0],
                        secondChoice = userSelection[1];
 
