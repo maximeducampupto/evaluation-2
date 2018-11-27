@@ -103,11 +103,11 @@ let gameBoard = document.getElementById('game'),
     ],
     rand,
     shuffled = shuffle(cards),
-    score = 0,
     cardsDiv = document.getElementsByClassName('card'),
     difficultyWrapper = document.getElementById('difficulty-settings-wrapper'),
     difficultyButtons = document.getElementsByClassName('difficultyButton'),
-    timerDiv = document.getElementById('timer');
+    timerDiv = document.getElementById('timer'),
+    scoreBoard = document.getElementById('score-wrapper');
 
 
 
@@ -188,7 +188,12 @@ function createCardListeners()
 
                    if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path'))
                    {
-                       score++;
+                       Game.score++;
+
+                       if (Game.score === cards.length / 2)
+                       {
+                           Game.win(Timer.getTimeLeft());
+                       }
                        userSelection = [];
                    } else {
                        Animator.flipBack(firstChoice, target);
@@ -252,6 +257,8 @@ let Animator = {
     {
         gameBoard.classList.remove('gameBoardToLeft');
         gameBoard.classList.add('gameBoardToLeftMost');
+
+        scoreBoard.classList.add('scoreBoardToLeft');
     }
 
 
@@ -260,6 +267,7 @@ let Animator = {
 
 let Timer = {
     selectedDifficulty: null,
+    timeLeft : null,
 
     init: function (value) {
         Timer.selectedDifficulty = value;
@@ -284,18 +292,18 @@ let Timer = {
     runFor: function(time)
     {
 
-        let timeLeft = 3;
-        Timer.display(timeLeft);
+        Timer.timeLeft = time;
+        Timer.display(Timer.timeLeft);
 
         function loop()
         {
-            let timer = setTimeout(function() {
-                timeLeft--;
-                Timer.display(timeLeft);
-                if (timeLeft > 0)
+            setTimeout(function() {
+                Timer.timeLeft--;
+                Timer.display(Timer.timeLeft);
+                if (Timer.timeLeft > 0)
                 {
                     loop();
-                } else if (timeLeft === 0)
+                } else if (Timer.timeLeft === 0)
                 {
                     Game.timeRanOut();
                 }
@@ -317,15 +325,24 @@ let Timer = {
         seconds = seconds === 0 ? '00' : seconds;
 
         timerDiv.innerHTML = `${minutes} : ${seconds}`;
+    },
+
+    getTimeLeft: function()
+    {
+        let minutes = Math.floor(Timer.timeLeft / 60),
+            seconds =  Math.floor(Timer.timeLeft % 60);
+
+        return [minutes, seconds];
     }
 
 
-}
+};
 
 
 let Game = {
 
     isRunning : false,
+    score : 0,
 
 
     timeRanOut: function()
@@ -333,12 +350,29 @@ let Game = {
         Game.gameOver("timer");
     },
 
-    gameOver: function(reason)
+    win: function(timeLeft)
+    {
+        Game.gameOver("win", timeLeft);
+    },
+
+    gameOver: function(reason, timeLeft = null)
     {
         Game.isRunning = false;
         Animator.displayScore();
+
+        switch(reason) {
+            case "timer":
+                document.getElementById('result').innerHTML = "You lose!";
+                document.getElementById('timeLeft').innerHTML = "Timer ran out";
+                break;
+            case "win":
+                document.getElementById('result').innerHTML = "Congratulations!";
+                document.getElementById('timeLeft').innerHTML = `Time left: ${timeLeft[0]} mins and ${timeLeft[1]} seconds`;
+        }
+
+        document.getElementById('pairs-found').innerHTML = `You've found ${Game.score} ${Game.score === 1 ? "pair" : "pairs"}`;
     }
-}
+};
 
 function startGame()
 {

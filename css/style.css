@@ -97,9 +97,30 @@ body {
 #score-wrapper {
     position: relative;
     left: 4000px;
-    bottom: 200vh;
-    font-size: 5rem;
-    display: none;
+    bottom: 180vh;
+    font-size: 3rem;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    color: goldenrod;
+    width: 50%;
+    height: 100vh;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+}
+
+#score-wrapper h1 {
+    width: fit-content;
+    background: url("../assets/wooden-pattern.jpg");
+    padding: .8rem;
+    margin-bottom: 4rem;
+    border-radius: 10px;
+    border: 6px solid goldenrod;
+}
+
+#pairs-found-wrapper {
+    text-align: center;
 }
 
 .card {
@@ -193,6 +214,10 @@ body {
     animation: gameBoardToLeftMost .3s forwards;
 }
 
+.scoreBoardToLeft {
+    animation: scoreBoardToLeft .3s forwards;
+}
+
 @keyframes flipped {
     0% {
         transform: rotateX(0deg);
@@ -233,6 +258,22 @@ body {
         visibility: hidden;
     }
 }
+
+
+@keyframes scoreBoardToLeft  {
+    0% {
+        left: 40000px;
+        visibility: hidden;
+    }
+    100% {
+        left: 0;
+        visibility: visible;
+    }
+}
+
+
+
+
 
 
 /* * * * * * * * * * *
