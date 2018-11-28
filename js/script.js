@@ -186,9 +186,9 @@ function createCardListeners()
 
 
 /* * * * * * * * * * *
-*  Creation of listeners attached to the difficulty buttons and calls for gameStart()
+*  Creation of listeners attached to the difficulty buttons and calls for Game.start()
 * * * * * * * * * * */
-function createDifficultyButtonsListeners()
+function createButtonListeners()
 {
 
     for (let i = 0; i < difficultyButtons.length; i++)
@@ -202,6 +202,10 @@ function createDifficultyButtonsListeners()
             }
         });
     }
+
+    document.getElementById('replay').addEventListener('click', function() {
+       Game.restart();
+    });
 }
 
 /* * * * * * * * * * *
@@ -247,9 +251,14 @@ let Animator = {
         gameBoard.classList.add('gameBoardToLeftMost');
 
         scoreBoard.classList.add('scoreBoardToLeft');
+    },
+
+    restart: function()
+    {
+        difficultyWrapper.className = "";
+        gameBoard.className = "";
+        scoreBoard.className = "";
     }
-
-
 };
 
 
@@ -284,7 +293,7 @@ let Timer = {
     runFor: function(time)
     {
 
-        Timer.timeLeft = time;
+        Timer.timeLeft = 1;
         Timer.display(Timer.timeLeft);
 
         function loop()
@@ -379,11 +388,18 @@ let Game = {
         createCardListeners();
         Animator.displayBoard();
         Timer.start();
+    },
+
+    restart: function()
+    {
+
+        userSelection = [];
+        Game.score = 0;
+        shuffled = shuffle(cards);
+        Animator.restart();
     }
 };
 
 
-createDifficultyButtonsListeners();
-
-// TODO BUGS
-// TODO Verif que le timer s'arrête correctement (ça a l'air d'être bon)
+/* Selecting a difficulty setting calls for Game.start() */
+createButtonListeners();
