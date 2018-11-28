@@ -14,6 +14,7 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     overflow: hidden;
+    padding-top: 5rem;
 }
 
 #difficulty-settings-wrapper {
@@ -36,6 +37,11 @@ body {
     border-radius: 10px;
     background: url("../assets/wooden-pattern.jpg");
     background-repeat: repeat;
+}
+
+#difficulty-settings-wrapper p {
+    color: goldenrod;
+    font-size: 1.2rem;
 }
 
 .difficultyButton {
@@ -73,8 +79,8 @@ body {
      */
     position: relative;
     left: 2000px;
-    bottom: 85vh;
-    width: 50%;
+    bottom: 95vh;
+    width: 60vw;
     padding: 2rem;
     margin: 0 auto;
     box-sizing: border-box;
@@ -89,7 +95,7 @@ body {
     position: relative;
     bottom: 30px;
     text-align: center;
-    width: fit-content;
+    width: 150px;
     padding: 1rem;
     margin: 0 auto;
 }
@@ -124,26 +130,13 @@ body {
 }
 
 .card {
-    /*
-    width: 100px;
+    width: 130px;
+    border: 6px solid darkgoldenrod;
+    background-image: url("../assets/wooden-pattern.jpg");
+    background-size: 130px 200px;
+    border-radius: 10px;
+    background-position: center;
     height: 200px;
-    flex-basis: 191px;
-    margin: .5rem;
-    padding: 1rem;
-    background: rgb(94, 47, 14);
-    border: 6px solid darkgoldenrod;
-    background-image: url("../assets/gemRed.png");
-    background-size: cover;
-    border-radius: 10px;
-    background-position: center;
-     */
-    width: 100px;background: rgb(94, 47, 14);
-    border: 6px solid darkgoldenrod;
-    background-image: url("../assets/gemRed.png");
-    background-size: cover;
-    border-radius: 10px;
-    background-position: center;
-    height: 100px;
     display: inline-block;
     margin: .5rem;
 
@@ -193,9 +186,19 @@ body {
     background-image: url("../assets/envelope.png");
 }
 
+.bow {
+    background-image: url("../assets/bow.png");
+}
+
+.potionRed {
+    background-image: url("../assets/potionRed.png");
+}
+
 .scroll {
     background-image: url("../assets/scroll.png");
 }
+
+
 
 
 .flipped {

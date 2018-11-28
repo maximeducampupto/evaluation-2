@@ -5,99 +5,59 @@ let gameBoard = document.getElementById('game'),
     userSelection = [],
     cards = [
         {
-            id: 0,
-            path: "armor",
-        },
-        {
             id: 1,
-            path: "armor",
+            path: "potionRed",
         },
         {
             id: 2,
-            path: "axe",
+            path: "potionRed",
         },
         {
             id: 3,
-            path: "axe",
+            path: "upg_shield",
         },
         {
             id: 4,
-            path: "dagger",
+            path: "upg_shield",
         },
         {
             id: 5,
-            path: "dagger",
+            path: "bow",
         },
         {
             id: 6,
-            path: "upg_shield",
+            path: "bow",
         },
         {
             id: 7,
-            path: "upg_shield",
+            path: "axeDouble2",
         },
         {
             id: 8,
-            path: "tome",
+            path: "axeDouble2",
         },
         {
             id: 9,
-            path: "tome",
+            path: "backpack",
         },
         {
             id: 10,
-            path: "map",
+            path: "backpack",
         },
         {
             id: 11,
-            path: "map",
+            path: "sword",
         },
         {
             id: 12,
-            path: "axe2",
+            path: "sword",
         },
         {
             id: 13,
-            path: "axe2",
-        },
-        {
-            id: 14,
-            path: "axeDouble2",
-        },
-        {
-            id: 15,
-            path: "axeDouble2",
-        },
-        {
-            id: 16,
-            path: "backpack",
-        },
-        {
-            id: 17,
-            path: "backpack",
-        },
-        {
-            id: 18,
-            path: "sword",
-        },
-        {
-            id: 19,
-            path: "sword",
-        },
-        {
-            id: 20,
-            path: "envelope",
-        },
-        {
-            id: 21,
-            path: "envelope",
-        },
-        {
-            id: 22,
             path: "scroll",
         },
         {
-            id: 23,
+            id: 14,
             path: "scroll",
         },
     ],
@@ -124,6 +84,7 @@ function prepareBoard(arrayObj)
         card.id = arrayObj[i].id;
         card.setAttribute('data-path', arrayObj[i].path);
 
+        console.log(card);
         gameBoard.appendChild(card);
     }
 }
@@ -182,11 +143,17 @@ function createCardListeners()
                }
 
                if (userSelection.length === 2)
-               { // TODO prevent double click on same image being a win
+               {
                    let firstChoice = userSelection[0],
                        secondChoice = userSelection[1];
 
-                   if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path'))
+                   if (firstChoice === secondChoice)
+                   {
+                       userSelection.pop();
+                       return;
+                   }
+
+                   if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path') && firstChoice.id !== secondChoice.id)
                    {
                        Game.score++;
 
@@ -375,7 +342,7 @@ let Game = {
             case "win":
                 document.getElementById('result').innerHTML = "Félicitations!";
                 document.getElementById('timeLeft').innerHTML = `Temps restant: ${timeLeft[0]} ${timeLeft[0] <= 1 ? "min" : "mins"} et ${timeLeft[1]} secondes`;
-                document.getElementById('pairs-found').innerHTML = `Tu as trouvé toutes les paires!"}`;
+                document.getElementById('pairs-found').innerHTML = `Tu as trouvé toutes les paires!`;
         }
     },
 
