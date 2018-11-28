@@ -1,3 +1,13 @@
+function l(what)
+{
+    console.log(what);
+}
+
+function a(what)
+{
+    alert(what);
+}
+
 /* * * * * * * * * * *
  * Variables
  * * * * * * * * * * */
@@ -78,13 +88,18 @@ function prepareBoard(arrayObj)
 {
     for (let i = 0; i < arrayObj.length; i++)
     {
-        let card = document.createElement('div');
+        let card = document.createElement('div'),
+            img = document.createElement('img');
 
         card.classList.add('card');
         card.id = arrayObj[i].id;
         card.setAttribute('data-path', arrayObj[i].path);
 
-        console.log(card);
+        img.src = `assets/${arrayObj[i].path}.png`;
+        img.style.display = "none";
+
+        card.appendChild(img);
+
         gameBoard.appendChild(card);
     }
 }
@@ -136,34 +151,32 @@ function createCardListeners()
            {
                let target = e.target;
 
-               if (userSelection.length < 2)
-               {
-                   Animator.flip(target);
-                   userSelection.push(target);
-               }
-
-               if (userSelection.length === 2)
-               {
-                   let firstChoice = userSelection[0],
-                       secondChoice = userSelection[1];
-
-                   if (firstChoice === secondChoice)
-                   {
-                       userSelection.pop();
-                       return;
+               // Only executes if the card clicked on wasn't already selected
+               if (target.tagName === "DIV" && !target.classList.contains('flipped')) {
+                   if (userSelection.length < 2) {
+                       Animator.flip(target);
+                       userSelection.push(target);
                    }
 
-                   if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path') && firstChoice.id !== secondChoice.id)
-                   {
-                       Game.score++;
+                   if (userSelection.length === 2) {
+                       let firstChoice = userSelection[0],
+                           secondChoice = userSelection[1];
 
-                       if (Game.score === cards.length / 2)
-                       {
-                           Game.win(Timer.getTimeLeft());
+                       if (firstChoice.id === secondChoice.id) {
+                           userSelection.pop();
+                           return;
                        }
-                       userSelection = [];
-                   } else {
-                       Animator.flipBack(firstChoice, target);
+
+                       if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path') && firstChoice.id !== secondChoice.id) {
+                           Game.score++;
+
+                           if (Game.score === cards.length / 2) {
+                               Game.win(Timer.getTimeLeft());
+                           }
+                           userSelection = [];
+                       } else {
+                           Animator.flipBack(firstChoice, target);
+                       }
                    }
                }
            }
@@ -201,7 +214,8 @@ let Animator = {
         card.classList.add('flipped');
         setTimeout(function()
         {
-            card.classList.add(card.getAttribute('data-path'));
+            //card.classList.add(card.getAttribute('data-path'));
+            card.firstChild.style.display = "block";
         }, 100);
     },
 
@@ -210,6 +224,13 @@ let Animator = {
         setTimeout(function() {
             firstChoice.className = "card";
             target.className = "card";
+
+
+            // TODO add class to fade out
+            firstChoice.firstChild.style.display = "none";
+            target.firstChild.style.display = "none";
+
+
             userSelection = [];
         }, 500);
     },
@@ -238,6 +259,7 @@ let Animator = {
 let Timer = {
     selectedDifficulty: null,
     timeLeft : null,
+    chrono : null,
 
     init: function (value) {
         Timer.selectedDifficulty = value;
@@ -267,7 +289,7 @@ let Timer = {
 
         function loop()
         {
-            setTimeout(function() {
+            Timer.chrono = setTimeout(function() {
                 Timer.timeLeft--;
                 Timer.display(Timer.timeLeft);
                 if (Timer.timeLeft > 0)
@@ -320,11 +342,15 @@ let Game = {
 
     timeRanOut: function()
     {
+        clearTimeout(Timer.chrono);
+        Timer.chrono = null;
         Game.gameOver("timer");
     },
 
     win: function(timeLeft)
     {
+        clearTimeout(Timer.chrono);
+        Timer.chrono = null;
         Game.gameOver("win", timeLeft);
     },
 
@@ -341,7 +367,7 @@ let Game = {
                 break;
             case "win":
                 document.getElementById('result').innerHTML = "Félicitations!";
-                document.getElementById('timeLeft').innerHTML = `Temps restant: ${timeLeft[0]} ${timeLeft[0] <= 1 ? "min" : "mins"} et ${timeLeft[1]} secondes`;
+                document.getElementById('timeLeft').innerHTML = `Temps restant: ${timeLeft[0] <= 1 ? "" :  timeLeft[0] + "mins et "} ${timeLeft[1]} secondes`;
                 document.getElementById('pairs-found').innerHTML = `Tu as trouvé toutes les paires!`;
         }
     },
@@ -359,3 +385,5 @@ let Game = {
 
 createDifficultyButtonsListeners();
 
+// TODO BUGS
+// TODO Verif que le timer s'arrête correctement (ça a l'air d'être bon)

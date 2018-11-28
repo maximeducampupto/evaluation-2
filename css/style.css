@@ -66,17 +66,6 @@ body {
 }
 
 #game {
-    /*
-    width: 1400px;
-    display: flex;
-    visibility: hidden;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 10rem auto;
-    position: relative;
-    left: 2000px;
-    bottom: 115vh;
-     */
     position: relative;
     left: 2000px;
     bottom: 95vh;
@@ -139,7 +128,14 @@ body {
     height: 200px;
     display: inline-block;
     margin: .5rem;
+    position: relative;
+}
 
+.card img {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .armor {
@@ -205,6 +201,10 @@ body {
     animation: flipped .2s ease-in forwards;
 }
 
+.flippedBack {
+    animation: flippedBack .2s ease-in forwards;
+}
+
 .difficultySettingsToLeft {
     animation: difficultySettingsToLeft .3s forwards;
 }
@@ -223,7 +223,7 @@ body {
 
 @keyframes flipped {
     0% {
-        transform: rotateX(0deg);
+        transform: rotateY(0deg);
     }
     100% {
         transform: rotateY(-180deg);
