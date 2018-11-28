@@ -1,13 +1,3 @@
-function l(what)
-{
-    console.log(what);
-}
-
-function a(what)
-{
-    alert(what);
-}
-
 /* * * * * * * * * * *
  * Variables
  * * * * * * * * * * */
@@ -236,7 +226,7 @@ let Animator = {
 
 
             userSelection = [];
-        }, 500);
+        }, 600);
     },
 
     displayBoard: function()
@@ -255,9 +245,19 @@ let Animator = {
 
     restart: function()
     {
-        difficultyWrapper.className = "";
-        gameBoard.className = "";
-        scoreBoard.className = "";
+        scoreBoard.classList.add('resetScoreBoard');
+        gameBoard.classList.add('resetGameBoard');
+
+        setTimeout(function() {
+            difficultyWrapper.classList.remove('difficultySettingsToLeft');
+            difficultyWrapper.classList.add('resetDifficultyWrapper');
+        }, 500);
+
+        setTimeout(function() {
+            gameBoard.className = "";
+            scoreBoard.className = "";
+            difficultyWrapper.className = "";
+        }, 800);
     }
 };
 
@@ -293,7 +293,7 @@ let Timer = {
     runFor: function(time)
     {
 
-        Timer.timeLeft = 1;
+        Timer.timeLeft = time;
         Timer.display(Timer.timeLeft);
 
         function loop()
@@ -383,6 +383,12 @@ let Game = {
 
     start: function()
     {
+        while (gameBoard.children.length > 1)
+        {
+            gameBoard.removeChild(gameBoard.lastChild);
+        }
+
+        shuffled = shuffle(cards);
         Game.isRunning = true;
         prepareBoard(shuffled);
         createCardListeners();
@@ -392,10 +398,8 @@ let Game = {
 
     restart: function()
     {
-
         userSelection = [];
         Game.score = 0;
-        shuffled = shuffle(cards);
         Animator.restart();
     }
 };
