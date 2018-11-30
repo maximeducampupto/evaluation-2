@@ -5,7 +5,7 @@
       <paths name="webhostupto">
         <serverdata>
           <mappings>
-            <mapping deploy="/memory" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/public_html/memory" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

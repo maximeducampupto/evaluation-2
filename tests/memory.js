@@ -86,7 +86,7 @@ function prepareBoard(arrayObj)
         card.id = arrayObj[i].id;
         card.setAttribute('data-path', arrayObj[i].path);
 
-        img.src = `assets/${arrayObj[i].path}.png`;
+        img.src = `../assets/${arrayObj[i].path}.png`;
         img.style.display = "none";
 
         card.appendChild(img);
@@ -138,42 +138,42 @@ function createCardListeners()
     {
         cardsDiv[i].addEventListener('click', function(e)
         {
-           if (Game.isRunning && !cardIsClicked)
-           {
-               cardIsClicked = true;
-               let target = e.target;
+            if (Game.isRunning && !cardIsClicked)
+            {
+                cardIsClicked = true;
+                let target = e.target;
 
-               // Only executes if the card clicked on wasn't already selected
-               if (target.tagName === "DIV" && !target.classList.contains('flipped')) {
-                   if (userSelection.length < 2) {
-                       Animator.flip(target);
-                       userSelection.push(target);
-                   }
+                // Only executes if the card clicked on wasn't already selected
+                if (target.tagName === "DIV" && !target.classList.contains('flipped')) {
+                    if (userSelection.length < 2) {
+                        Animator.flip(target);
+                        userSelection.push(target);
+                    }
 
-                   if (userSelection.length === 2) {
-                       let firstChoice = userSelection[0],
-                           secondChoice = userSelection[1];
+                    if (userSelection.length === 2) {
+                        let firstChoice = userSelection[0],
+                            secondChoice = userSelection[1];
 
-                       if (firstChoice.id === secondChoice.id) {
-                           userSelection.pop();
-                           return;
-                       }
+                        if (firstChoice.id === secondChoice.id) {
+                            userSelection.pop();
+                            return;
+                        }
 
-                       if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path') && firstChoice.id !== secondChoice.id) {
-                           Game.score++;
-                           firstChoice.style.borderStyle = "solid";
-                           secondChoice.style.borderStyle = "solid";
+                        if (firstChoice.getAttribute('data-path') === secondChoice.getAttribute('data-path') && firstChoice.id !== secondChoice.id) {
+                            Game.score++;
+                            firstChoice.style.borderStyle = "solid";
+                            secondChoice.style.borderStyle = "solid";
 
-                           if (Game.score === cards.length / 2) {
-                               Game.win(Timer.getTimeLeft());
-                           }
-                           userSelection = [];
-                       } else {
-                           Animator.flipBack(firstChoice, target);
-                       }
-                   }
-               }
-           }
+                            if (Game.score === cards.length / 2) {
+                                Game.win(Timer.getTimeLeft());
+                            }
+                            userSelection = [];
+                        } else {
+                            Animator.flipBack(firstChoice, target);
+                        }
+                    }
+                }
+            }
 
             setTimeout(function()
             {
@@ -203,7 +203,7 @@ function createButtonListeners()
     }
 
     document.getElementById('replay').addEventListener('click', function() {
-       Game.restart();
+        Game.restart();
     });
 }
 
@@ -228,11 +228,8 @@ let Animator = {
             firstChoice.className = "card";
             target.className = "card";
 
-
-            // TODO add class to fade out
             firstChoice.firstChild.style.display = "none";
             target.firstChild.style.display = "none";
-
 
             userSelection = [];
         }, 600);
@@ -293,7 +290,7 @@ let Timer = {
                 break;
             case "hard":
                 Timer.runFor(60); // 1 minutes
-            break;
+                break;
             default:
                 Timer.runFor(180);
         }
@@ -437,92 +434,102 @@ if (window.location.href === 'https://anomalous-headset.000webhostapp.com/memory
     let test = 5;
 
 // randomNumber test
-   setTimeout(function() {
-       (function(test) {
+    setTimeout(function() {
+        (function(test) {
 
-           let temp = randomNumber(test);
+            let temp = randomNumber(test);
 
-           console.log(
-               temp >= 0 && temp <= 5 ? `randomNumber(5) test PASSED (number: ${temp})` : `randomNumber test FAILED (number: ${temp})`
-           );
-       })(test);
+            console.log(
+                temp >= 0 && temp <= 5 ? `randomNumber(5) test PASSED (number: ${temp})` : `randomNumber test FAILED (number: ${temp})`
+            );
+        })(test);
 
 // Shuffle test
-       test = [1, 2, 3, 4, 5, 6];
+        test = [1, 2, 3, 4, 5, 6];
 
-       (function(test) {
+        (function(test) {
 
-           let temp = shuffle(test),
-               result = [
-                   test.join(''),
-                   temp.join('')
-               ];
+            let temp = shuffle(test),
+                result = [
+                    test.join(''),
+                    temp.join('')
+                ];
 
-           console.log(
-               result[0] !== result[1] ? `shuffle test PASSED ${result[0]} / ${result[1]}` : `suffle test FAILED ${result[0]} / ${result[1]}`
-           );
-       })(test);
+            console.log(
+                result[0] !== result[1] ? `shuffle test PASSED ${result[0]} / ${result[1]}` : `suffle test FAILED ${result[0]} / ${result[1]}`
+            );
+        })(test);
 
 // Difficulty buttons test
-       test = 'hard';
+        test = 'hard';
 
-       (function(test) {
-           // Checks if board loads properly
-           let boardChildren = gameBoard.childNodes,
-               before = boardChildren.length,
-               after;
+        (function(test) {
+            // Checks if board loads properly
+            let boardChildren = gameBoard.childNodes,
+                before = boardChildren.length,
+                after;
 
-           console.log(
-               '**** Difficulty buttons test *****\n' +
-               `Before selecting a difficulty: gameBoard children count = ${before} (timer node)`
-           );
+            console.log(
+                '**** Difficulty buttons test *****\n' +
+                `Before selecting a difficulty: gameBoard children count = ${before} (timer node)`
+            );
 
-           document.getElementById(test).click();
-           Timer.timeLeft = 3;
+            document.getElementById(test).click();
+            Timer.timeLeft = 3;
 
-           after = boardChildren.length;
-           console.log(
-               `Simulating selection of difficulty: gameBoard children count = ${after} (timer node + cards)` +
-               `\n${before === 1 && after === 15 ? 'Difficulty buttons test PASSED' : 'Difficulty buttons test FAILED'}`
-           );
-       })(test);
+            after = boardChildren.length;
+            console.log(
+                `Simulating selection of difficulty: gameBoard children count = ${after} (timer node + cards)` +
+                `\n${before === 1 && after === 15 ? 'Difficulty buttons test PASSED' : 'Difficulty buttons test FAILED'}`
+            );
+        })(test);
 
 // Reset button test
-       test = 'replay';
+        test = 'replay';
 
-       setTimeout(function(){
-           (function(test) {
+        setTimeout(function(){
+            (function(test) {
 
-               let scoreBefore,
-                   scoreAfter,
-                   difficulty = Timer.selectedDifficulty,
-                   pair = [document.getElementById('1'), document.getElementById('2')];
+                let scoreBefore,
+                    scoreAfter,
+                    difficulty = Timer.selectedDifficulty,
+                    pair = [document.getElementById('1'), document.getElementById('2')];
 
-               pair[0].click();
+                pair[0].click();
 
-               setTimeout(function() {
-                   pair[1].click();
-               }, 500);
+                setTimeout(function() {
+                    pair[1].click();
+                }, 500);
 
-               setTimeout(function() {
-                   scoreBefore = Game.score;
-                   console.log(
-                       '******* Reset button test *******\n' +
-                       `Simulating player finding a pair. Score : ${scoreBefore}, difficulty: ${difficulty} `
-                   );
-               }, 600);
+                setTimeout(function() {
+                    scoreBefore = Game.score;
+                    console.log(
+                        '******* Reset button test *******\n' +
+                        `Simulating player finding a pair. Score : ${scoreBefore}, difficulty: ${difficulty} `
+                    );
+                }, 600);
 
-               setTimeout(function() {
-                   document.getElementById(test).click();
-                   difficulty = Timer.selectedDifficulty;
-                   scoreAfter = Game.score;
-                   console.log(
-                       `Game reset. Score = ${scoreAfter}, difficulty: ${difficulty}\n` +
-                       `${scoreBefore !== scoreAfter && difficulty === null ? 'Reset button test PASSED' : 'Reset button test FAILED'}`
-                   );
-               }, 3500);
+                setTimeout(function() {
+                    document.getElementById(test).click();
+                    difficulty = Timer.selectedDifficulty;
+                    scoreAfter = Game.score;
+                    console.log(
+                        `Game reset. Score = ${scoreAfter}, difficulty: ${difficulty}\n` +
+                        `${scoreBefore !== scoreAfter && difficulty === null ? 'Reset button test PASSED' : 'Reset button test FAILED'}`
+                    );
+                }, 3500);
 
-           })(test);
-       }, 1500);
-   }, 2000);
+            })(test);
+        }, 1500);
+    }, 2000);
 }
+
+if (window.location.href === 'https://anomalous-headset.000webhostapp.com/memory/tests/memory.test.html')
+{
+    document.body.style.background = "none";
+    document.body.style.padding = "0";
+    document.getElementsByClassName('wrapper')[0].style.display = "none";
+}
+
+
+export {randomNumber, shuffle, Game, Timer}

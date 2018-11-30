@@ -346,6 +346,83 @@ body {
 /* * * * * * * * * * *
 * // WIP WIP WIP
 * * * * * * * * * * */
+/*
+@media all and (width: 1480px)
+{
+
+    .card {
+        width: 80px;
+        height: 150px;
+    }
+
+    #game {
+        width: 50%;
+    }
+
+    img {
+        width: 60px;
+        height: 60px;
+    }
+
+    #score-wrapper {
+        bottom: 200vh;
+    }
+
+    #score-wrapper h1 {
+        font-size: 1.3rem;
+        border: 3px solid goldenrod;
+    }
+
+    #score-wrapper p {
+        font-size: 1.1rem;
+    }
+
+    #replay {
+        transform: scale(.5);
+    }
+
+
+}
+
+ */
+
+@media (min-width: 850px) and (max-width: 1500px) {
+    .card {
+        width: 80px;
+        height: 150px;
+    }
+
+    #game {
+        width: 55%;
+    }
+
+    #timer {
+        left: -40px;
+    }
+
+    img {
+        width: 60px;
+        height: 60px;
+    }
+
+    #score-wrapper {
+        bottom: 200vh;
+    }
+
+    #score-wrapper h1 {
+        font-size: 1.3rem;
+        border: 3px solid goldenrod;
+    }
+
+    #score-wrapper p {
+        font-size: 1.1rem;
+    }
+
+    #replay {
+        transform: scale(.5);
+    }
+}
+
 @media all and (max-device-width: 850px)
 {
     body {
@@ -400,7 +477,7 @@ body {
     .card {
         width: 50px;
         height:  80px;
-        border: 2px solid darkgoldenrod;
+        border: 2px dotted darkgoldenrod;
         background-image: url("../assets/wooden-pattern.jpg");
         background-size: 130px 200px;
         border-radius: 10px;
