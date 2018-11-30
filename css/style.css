@@ -161,32 +161,8 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.armor {
-    background-image: url("../assets/armor.png");
-}
-
-.axe {
-    background-image: url("../assets/axe.png");
-}
-
-.dagger {
-    background-image: url("../assets/dagger.png");
-}
-
 .upg_shield {
     background-image: url("../assets/upg_shield.png");
-}
-
-.tome {
-    background-image: url("../assets/tome.png");
-}
-
-.map {
-    background-image: url("../assets/map.png");
-}
-
-.axe2 {
-    background-image: url("../assets/axe2.png");
 }
 
 .axeDouble2 {
@@ -199,10 +175,6 @@ body {
 
 .sword {
     background-image: url("../assets/sword.png");
-}
-
-.envelope {
-    background-image: url("../assets/envelope.png");
 }
 
 .bow {
@@ -341,50 +313,6 @@ body {
         left: 0;
     }
 }
-
-
-/* * * * * * * * * * *
-* // WIP WIP WIP
-* * * * * * * * * * */
-/*
-@media all and (width: 1480px)
-{
-
-    .card {
-        width: 80px;
-        height: 150px;
-    }
-
-    #game {
-        width: 50%;
-    }
-
-    img {
-        width: 60px;
-        height: 60px;
-    }
-
-    #score-wrapper {
-        bottom: 200vh;
-    }
-
-    #score-wrapper h1 {
-        font-size: 1.3rem;
-        border: 3px solid goldenrod;
-    }
-
-    #score-wrapper p {
-        font-size: 1.1rem;
-    }
-
-    #replay {
-        transform: scale(.5);
-    }
-
-
-}
-
- */
 
 @media (min-width: 850px) and (max-width: 1500px) {
     .card {

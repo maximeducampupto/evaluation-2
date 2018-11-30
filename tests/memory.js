@@ -230,7 +230,6 @@ let Animator = {
 
             firstChoice.firstChild.style.display = "none";
             target.firstChild.style.display = "none";
-
             userSelection = [];
         }, 600);
     },
@@ -419,110 +418,6 @@ let Game = {
 createButtonListeners();
 
 
-
-/* * * * * * * * * * *
-* Tests
-* * * * * * * * * * */
-
-
-if (window.location.href === 'https://anomalous-headset.000webhostapp.com/memory/memory-tests.html')
-{
-
-    document.getElementById('title').innerHTML = "TESTS";
-    document.getElementById('infos').innerHTML = "Le résultat des tests est affiché dans la console";
-
-    let test = 5;
-
-// randomNumber test
-    setTimeout(function() {
-        (function(test) {
-
-            let temp = randomNumber(test);
-
-            console.log(
-                temp >= 0 && temp <= 5 ? `randomNumber(5) test PASSED (number: ${temp})` : `randomNumber test FAILED (number: ${temp})`
-            );
-        })(test);
-
-// Shuffle test
-        test = [1, 2, 3, 4, 5, 6];
-
-        (function(test) {
-
-            let temp = shuffle(test),
-                result = [
-                    test.join(''),
-                    temp.join('')
-                ];
-
-            console.log(
-                result[0] !== result[1] ? `shuffle test PASSED ${result[0]} / ${result[1]}` : `suffle test FAILED ${result[0]} / ${result[1]}`
-            );
-        })(test);
-
-// Difficulty buttons test
-        test = 'hard';
-
-        (function(test) {
-            // Checks if board loads properly
-            let boardChildren = gameBoard.childNodes,
-                before = boardChildren.length,
-                after;
-
-            console.log(
-                '**** Difficulty buttons test *****\n' +
-                `Before selecting a difficulty: gameBoard children count = ${before} (timer node)`
-            );
-
-            document.getElementById(test).click();
-            Timer.timeLeft = 3;
-
-            after = boardChildren.length;
-            console.log(
-                `Simulating selection of difficulty: gameBoard children count = ${after} (timer node + cards)` +
-                `\n${before === 1 && after === 15 ? 'Difficulty buttons test PASSED' : 'Difficulty buttons test FAILED'}`
-            );
-        })(test);
-
-// Reset button test
-        test = 'replay';
-
-        setTimeout(function(){
-            (function(test) {
-
-                let scoreBefore,
-                    scoreAfter,
-                    difficulty = Timer.selectedDifficulty,
-                    pair = [document.getElementById('1'), document.getElementById('2')];
-
-                pair[0].click();
-
-                setTimeout(function() {
-                    pair[1].click();
-                }, 500);
-
-                setTimeout(function() {
-                    scoreBefore = Game.score;
-                    console.log(
-                        '******* Reset button test *******\n' +
-                        `Simulating player finding a pair. Score : ${scoreBefore}, difficulty: ${difficulty} `
-                    );
-                }, 600);
-
-                setTimeout(function() {
-                    document.getElementById(test).click();
-                    difficulty = Timer.selectedDifficulty;
-                    scoreAfter = Game.score;
-                    console.log(
-                        `Game reset. Score = ${scoreAfter}, difficulty: ${difficulty}\n` +
-                        `${scoreBefore !== scoreAfter && difficulty === null ? 'Reset button test PASSED' : 'Reset button test FAILED'}`
-                    );
-                }, 3500);
-
-            })(test);
-        }, 1500);
-    }, 2000);
-}
 
 if (window.location.href === 'https://anomalous-headset.000webhostapp.com/memory/tests/memory.test.html')
 {
